@@ -1,7 +1,7 @@
 //index.js
 //获取应用实例
 const app = getApp()
-let { sayHello } = require('../../utils/util')
+let { sayHello, request } = require('../../utils/util')
 import es from '../../utils/test-es6'
 
 Page({
@@ -18,6 +18,20 @@ Page({
     })
   },
   onLoad: function () {
+    request('/').then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
+    // wx.request({
+    //   url: 'http://10.20.70.114:3000/',
+    //   success: (res) => {
+    //     console.log(res)
+    //   },
+    //   fail: (err) => {
+    //     console.log(err)
+    //   }
+    // })
     es.testEs6()
     sayHello('Gys')
     if (app.globalData.userInfo) {
@@ -53,5 +67,9 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
+  },
+  async test () {
+    const res = await request('/')
+    console.log(res)
   }
 })
